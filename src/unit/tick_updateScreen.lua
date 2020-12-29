@@ -169,8 +169,13 @@ for i = 1, #scanner do
 
     -- delete the previous frame and set new frame
     -- by doing so we can change only parts of the screen and do not have to do a full screenrefresh
-    screen.deleteContent(content[i])
-    content[i] = screen.addContent(x, y, getMainSVG(percentScanned, scanStarted, scanEnding, timedisplay, scanTimeLeft, state[i], target, extraStyle))
+    --screen.deleteContent(content[i])
+    --content[i] = screen.addContent(x, y, getMainSVG(percentScanned, scanStarted, scanEnding, timedisplay, scanTimeLeft, state[i], target, extraStyle))
+    if content[i] > 0 then
+        screen.resetContent(content[i],getMainSVG(percentScanned, scanStarted, scanEnding, timedisplay, scanTimeLeft, state[i], target, extraStyle))
+    else
+        content[i] = screen.addContent(x, y, getMainSVG(percentScanned, scanStarted, scanEnding, timedisplay, scanTimeLeft, state[i], target, extraStyle))
+    end
 end
 
 -- if the double trigger reset button has been pushed a warnign will be written to the screen

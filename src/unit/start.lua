@@ -46,7 +46,7 @@ light = {light_1, light_2, light_3}
 
 -- more globals to track the state
 state = {}
-content = {}
+content = { -1, -1, -1}
 content["warning"] = -1
 started = {0, 0, 0}
 resettimer = 0
