@@ -26,7 +26,7 @@ A simple timer to show running time of territorry scans. Changes light color as 
 ### Bonus: restart bp automatically
 Here is what I do to have my bps restart if I lost connection and return in the detection zone.
 
-dz -> manual switch (switch) -> relais --> manual switch (switch) <--> bp
+    dz -> manual switch (switch) -> relais --> manual switch (switch) <--> bp
                  ^                      \
                  |                       \--> delay line
                  |                                  /
