@@ -1,7 +1,6 @@
-local print = system.print
-print("resettimer: " .. resettimer .. "system.getTime() - resettimer" .. system.getTime() - resettimer )
+-- double trigger button
+-- if pressed a second time within two seconds all scanner staes will be resetted
 if resettimer > 0 and system.getTime() - resettimer < 2 then
-    print("resetting")
     for i=1, #scanner do
         if state[i] ~= "idle" then
             light[i].setRGBColor(colors["idle"]["R"], colors["idle"]["G"], colors["idle"]["B"])  

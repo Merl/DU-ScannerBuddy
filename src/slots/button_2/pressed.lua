@@ -1,1 +1,2 @@
-changeState(1)
+-- changes the state of scanner 2
+changeState(2)

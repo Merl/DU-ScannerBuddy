@@ -1,5 +1,9 @@
-getDate = function(unix)
-    -- Given unix date, return string date
+-- time and date functions to calculate the current time based on DUs epoch variant
+-- DU time starts at 30.09.2017 00:00:00 
+-- remember DU time is determined by the client and localized. no universal DU time :/
+-- @src: https://scriptinghelpers.org/questions/25121/how-do-you-get-the-date-and-time-from-unix-epoch-time#28674
+getDate = function(duepoch)
+    -- Given DU date, return string date
     local tabIndexOverflow = function(seed, table)
         for i = 1, #table do
             if seed - table[i] <= 0 then
@@ -8,10 +12,12 @@ getDate = function(unix)
             seed = seed - table[i]
         end
     end
-    local unix =  unix or system.getTime()
+    local duepoch =  duepoch or system.getTime()
 
     local dayCount = function(yr) return (yr % 4 == 0 and (yr % 100 ~= 0 or yr % 400 == 0)) and 366 or 365 end
-    local year, days, month = 2017, math.ceil(unix/86400) + 272
+    -- for unix time this is 1970/01/01 00:00:00
+    -- in DU it is 2017/09/30 00:00:00
+    local year, days, month = 2017, math.ceil(duepoch/86400) + 272
     while days >= dayCount(year) do days = days - dayCount(year) year = year + 1 end -- Calculate year and days into that year
 
     month, days = tabIndexOverflow(days, {31,(dayCount(year) == 366 and 29 or 28),31,30,31,30,31,31,30,31,30,31}) 
@@ -26,7 +32,8 @@ getTime = function(seconds)
     return string.format("%d:%d:%d %s", hours, math.floor(seconds / 60 % 60), math.floor(seconds % 60), hours > 12 and "pm" or "am")
 end
 
-function getMainSVG(percentScanned, started, ending, running, timeleft, scannerState, extraStyle)
+-- function to get the SVG, does nothing but returning the SVG with passed variables
+function getMainSVG(percentScanned, started, ending, running, timeleft, scannerState, target, extraStyle)
     return [[
 <svg class="scanner-progress" style="background-color:none; font-family: monospace; ]].. extraStyle ..[["
                 width="50%" height="50%" viewBox="0 0 1920 1080" preserveAspectRatio="xMaxYMin meet">
@@ -93,11 +100,6 @@ function getMainSVG(percentScanned, started, ending, running, timeleft, scannerS
                     style="font-size: 45; font-weight: bold; fill: #ffffff; stroke: #ffffff; stroke-width: 1;">]] ..
                timeleft .. [[</text>
 
-
-
-
-
-
                 <rect x="760" y="530" rx="10" ry="10" width="1110" height="490"
                     style="fill:none;stroke:#0E2835;stroke-width:10;opacity:1;" />
                 <text x="770" y="590" text-anchor="left"
@@ -114,109 +116,28 @@ function getMainSVG(percentScanned, started, ending, running, timeleft, scannerS
                         </linearGradient>
                     </defs>
                     <path fill="url(#a)" fill-rule="evenodd" d="
-                            M0 67
-                            C 273,183
-                                822,-40
-                                1920.00,106 
-    
-                            V 359 
-                            H 0 
-                            V 67
-                            Z" transform="matrix(-1 0 0 1 1600 0)">
-
-                        <animate repeatCount="indefinite" fill="#454599" attributeName="d" dur="25s" values="
-                                M0 77 
-                                C 473,283
-                                822,-40
-                                1920,116 
-    
-                                V 359 
-                                H 0 
-                                V 67 
-                                Z; 
-    
-                                M0 77 
-                                C 473,-40
-                                1222,283
-                                1920,136 
-    
-                                V 359 
-                                H 0 
-                                V 67 
-                                Z; 
-    
-                                M0 77 
-                                C 973,260
-                                1722,-53
-                                1920,120 
-    
-                                V 359 
-                                H 0 
-                                V 67 
-                                Z; 
-    
-                                M0 77 
-                                C 473,283
-                                822,-40
-                                1920,116 
-    
-                                V 359 
-                                H 0 
-                                V 67 
-                                Z
-                                    ">
+                    M0 ]] .. target[1].M0 .. [[
+                    C  ]] .. target[1].C1[1] .. [[,]] .. target[1].C1[2] .. [[
+                       ]] .. target[1].C2[1] .. [[,]] .. target[1].C2[2] .. [[
+                       ]] .. target[1].C3[1] .. [[,]] .. target[1].C3[2] .. [[
+     
+                    V  ]] .. target[1].V1 .. [[ 
+                    H  ]] .. target[1].H .. [[ 
+                    V  ]] .. target[1].V2 .. [[
+                    Z" transform="matrix(-1 0 0 1 1600 0)">
+           
                     </path>
                     <path fill="url(#b)" fill-rule="evenodd" d="
-                            M0 67
-                            C 273,183
-                                822,-40
-                                1920.00,106 
-    
-                            V 359 
-                            H 0 
-                            V 67
+                            M0 ]] .. target[2].M0 .. [[
+                            C  ]] .. target[2].C1[1] .. [[,]] .. target[2].C1[2] .. [[
+                            ]] .. target[2].C2[1] .. [[,]] .. target[2].C2[2] .. [[
+                            ]] .. target[2].C3[1] .. [[,]] .. target[2].C3[2] .. [[
+            
+                            V  ]] .. target[2].V1 .. [[ 
+                            H  ]] .. target[2].H .. [[ 
+                            V  ]] .. target[2].V2 .. [[
                             Z" transform="matrix(-1 0 0 1 1600 0)">
-                        <animate repeatCount="indefinite" fill="#454599" attributeName="d" dur="15s" values="
-                                    M0 77 
-                                    C 473,283
-                                    822,-40
-                                    1920,116 
-    
-                                    V 359 
-                                    H 0 
-                                    V 67 
-                                    Z; 
-    
-                                    M0 77 
-                                    C 473,-40
-                                    1222,283
-                                    1920,136 
-    
-                                    V 359 
-                                    H 0 
-                                    V 67 
-                                    Z; 
-    
-                                    M0 77 
-                                    C 973,260
-                                    1722,-53
-                                    1920,120 
-    
-                                    V 359 
-                                    H 0 
-                                    V 67 
-                                    Z; 
-    
-                                    M0 77 
-                                    C 473,283
-                                    822,-40
-                                    1920,116 
-    
-                                    V 359 
-                                    H 0 
-                                    V 67 
-                                    Z
-                                        ">
+                        
                     </path>
                 </svg>
                 <rect x="40" y="700" rx="10" ry="10" width="700" height="320"
@@ -228,17 +149,4 @@ function getMainSVG(percentScanned, started, ending, running, timeleft, scannerS
                     style="font-size:8vw; font-size: 140; font-weight: bold; fill: orange; stroke: orange; stroke-width: 1;">]].. scannerState ..[[</text>
             </svg>
 ]]
-end
-
-function getTable(cont1, cont2, cont3)
-    return [[
-    <table width="100%" height="100%" style="font-family: ArialMT;">
-    <tr style="height:50vh">
-        <td style="width:50vw; border: 1px none solid; vertical-align:top;">]].. cont1 ..[[</td>
-        <td style="width:50vw; border: 1px none solid; vertical-align:top;">]] .. cont2 .. [[</td>
-    </tr>
-    <tr>
-        <td style="width:100vw; border: 1px none solid; vertical-align:top;" colspan="2">]].. cont3 ..[[</td>
-    </tr>
-</table> ]]
 end
