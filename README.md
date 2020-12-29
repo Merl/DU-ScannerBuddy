@@ -1,6 +1,10 @@
 # DU-ScannerBuddy
 
-A simple timer to show running time of territorry scans. Changes light color as indicator and shows running time on screen. 
+A simple timer for the game [Dual Universe](https://www.dualuniverse.game/) to show running time of territorry scans. Changes light color as indicator and shows running time on screen.
+<p float="left" width="100%">
+  <img src="https://github.com/Merl/DU-ScannerBuddy/raw/main/Du-ScannerBuddy-Screen.png" width="49%" />
+  <img src="https://github.com/Merl/DU-ScannerBuddy/raw/main/Du-ScannerBuddy-Scannerlight.png" width="49%" /> 
+</p>
 
 > As there is no LUA API for territory scanners there is no way to show if a scan error occured. If at any time we get a scanner API it should be simple to integrate.
 
