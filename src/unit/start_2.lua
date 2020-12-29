@@ -62,7 +62,7 @@ function getMainSVG(percentScanned, started, ending, running, timeleft, scannerS
 
 
                 <text x="400" y="395" text-anchor="middle"
-                    style="font-size:8vw; font-size: 100; font-weight: bold; fill: orange; stroke: #dfac20; stroke-width: 1;">]] ..
+                    style="font-size:8vw; font-size: 100; font-weight: bold; fill:rgb(]] .. colors[scannerState].R .. [[,]] .. colors[scannerState].G .. [[,]] .. colors[scannerState].B .. [[); stroke:rgb(]] .. colors[scannerState].R .. [[,]] .. colors[scannerState].G .. [[,]] .. colors[scannerState].B .. [[); stroke-width: 1;">]] ..
                percentScanned .. [[%</text>
                 <rect x="760" y="40" rx="10" ry="10" width="1110" height="470"
                     style="fill:none;stroke:#0E2835;stroke-width:10;opacity:1;">
@@ -146,7 +146,7 @@ function getMainSVG(percentScanned, started, ending, running, timeleft, scannerS
                     style="font-size:8vw; font-size: 60; font-weight: bold; fill: #46C2FF; stroke: #46C2FF; stroke-width: 1;">Scanner
                     status</text>
                 <text x="50" y="970" text-anchor="left"
-                    style="font-size:8vw; font-size: 140; font-weight: bold; fill: orange; stroke: orange; stroke-width: 1;">]].. scannerState ..[[</text>
+                    style="font-size:8vw; font-size: 140; font-weight: bold; fill:rgb(]] .. colors[scannerState].R .. [[,]] .. colors[scannerState].G .. [[,]] .. colors[scannerState].B .. [[); stroke:rgb(]] .. colors[scannerState].R .. [[,]] .. colors[scannerState].G .. [[,]] .. colors[scannerState].B .. [[); stroke-width: 1;">]].. scannerState ..[[</text>
             </svg>
 ]]
 end
